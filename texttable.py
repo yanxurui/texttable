@@ -551,7 +551,7 @@ class Texttable:
                     maxi.append(self._len_cell(cell))
         items = len(maxi)
         length = sum(maxi)
-        extra = items + (items -1) * 2 + [0, 3][self._has_border()]
+        extra = (items - 1) * 3 + [0, 4][self._has_border()]
         if self._max_width and length > self._max_width - extra:
             maxi = allocate_space(self._max_width - extra, maxi)
         self._width = maxi
@@ -585,15 +585,15 @@ class Texttable:
                 if isheader:
                     align = "c"
                 if align == "r":
-                    out += "%s " % (fill * space + cell_line)
+                    out += fill * space + cell_line
                 elif align == "c":
-                    out += "%s " % (int(fill/2) * space + cell_line \
-                            + int(fill/2 + fill%2) * space)
+                    out += int(fill/2) * space + cell_line \
+                            + int(fill/2 + fill%2) * space
                 else:
-                    out += "%s " % (cell_line + fill * space)
+                    out += cell_line + fill * space
                 if length < len(line):
-                    out += "%s " % [space, self._char_vert][self._has_vlines()]
-            out += "%s\n" % ['', self._char_vert][self._has_border()]
+                    out += " %s " % [space, self._char_vert][self._has_vlines()]
+            out += "%s\n" % ['', space + self._char_vert][self._has_border()]
         return out
 
     def _splitit(self, line, isheader):
